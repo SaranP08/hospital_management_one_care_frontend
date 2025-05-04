@@ -1,0 +1,11 @@
+@import "@angular/material/theming";
+
+@include mat-core();
+
+// Define your custom theme here
+$custom-primary: mat-palette($mat-pink, 100); // Light pink (approx. baby pink)
+$custom-accent: mat-palette($mat-purple, A200, A100, A400); // Accent color changed to purple
+
+$custom-theme: mat-light-theme($custom-primary, $custom-accent);
+
+@include angular-material-theme($custom-theme);

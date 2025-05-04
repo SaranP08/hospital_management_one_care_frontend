@@ -1,0 +1,142 @@
+<div [formGroup]="signUpForm" class="h-full w-full flex flex-row">
+  <div class="w-full sm:w-1/4 md:w-1/2 relative">
+    <img
+      class="h-full w-full object-cover opacity-100"
+      src="../../assets/doctor3.jpg"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-pink-100 from-40% to-pink-300 opacity-60"
+    ></div>
+  </div>
+  <div
+    class="w-full sm:w-3/4 md:w-1/2 absolute sm:relative h-full bg-pink-50 py-20 flex items-center"
+  >
+    <div class="w-full rounded bg-white mx-14 my-10 px-6 py-7 shadow-lg">
+      <div class="flex flex-col justify-center items-center mb-3">
+        <div>
+          <img class="h-8" src="../../assets/logo.png" />
+        </div>
+        <div>
+          <span class="font2 font-bold text-2xl">Create an account</span>
+        </div>
+        <div>
+          <span class="font2 text-sm text-gray-400"
+            >Welcome to Royal Clinic</span
+          >
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="flex flex-col mt-5 mb-3">
+        <div class="grid grid-cols-2">
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">First Name</mat-label>
+            <input formControlName="firstName" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('firstName')?.hasError('required')"
+            >
+              First Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">Last Name</mat-label>
+            <input formControlName="lastName" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('lastName')?.hasError('required')"
+            >
+              Last Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="male">Male</mat-option>
+              <mat-option value="female">Female</mat-option>
+            </mat-select>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('gender')?.hasError('required')"
+            >
+              Gender is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-1 m-1">
+            <mat-label class="font2">Age</mat-label>
+            <input formControlName="age" type="number" min="1" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('age')?.hasError('required')"
+            >
+              Age is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('age')?.hasError('min')"
+            >
+              Age must be greater than 0
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-2 m-1">
+            <mat-label class="font2">Email</mat-label>
+            <input formControlName="email" type="text" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('email')?.hasError('required')"
+            >
+              Email is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('email')?.hasError('email')"
+            >
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-span-2 m-1">
+            <mat-label class="font2">Password</mat-label>
+            <input formControlName="password" type="password" matInput />
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('password')?.hasError('minlength')"
+            >
+              Password must be at least 6 characters
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="signUpForm.get('password')?.hasError('required')"
+            >
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          <span
+            class="text-red-500 text-sm ml-2"
+            *ngIf="errorMsg && errorMsg !== ''"
+            >*{{ errorMsg }}</span
+          >
+        </div>
+      </div>
+      <div class="mb-3">
+        <button
+          [disabled]="!signUpForm.valid"
+          (click)="signUp()"
+          mat-flat-button
+          class="!text-white w-full"
+          color="primary"
+        >
+          Sign Up
+        </button>
+      </div>
+      <div class="flex justify-center">
+        <span class="text-sm font-bold font2"
+          >Already have an account? &nbsp;</span
+        ><span
+          [routerLink]="['/login']"
+          class="text-pink-600 cursor-pointer hover:underline"
+          >Sign In</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

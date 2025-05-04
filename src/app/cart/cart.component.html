@@ -1,0 +1,78 @@
+<mat-dialog-content class="!min-h-full p-7">
+  <div class="mx-3 my-2 flex items-center">
+    <span class="text-3xl font-bold font2 text-pink-600">
+      <mat-icon class="text-2xl mx-1">shopping_cart</mat-icon>
+      Cart</span
+    >
+  </div>
+  <mat-divider></mat-divider>
+
+  <div
+    *ngIf="cartData.length !== 0"
+    class="bg-gray-50 shadow-xl rounded-lg mb-10 p-4"
+  >
+    <div class="grid grid-cols-5 space-x-2 my-4">
+      <span class="col-span-1 font-semibold text-center">Sno</span>
+      <span class="col-span-1 font-semibold text-center">Name</span>
+      <span class="col-span-1 font-semibold text-center">Quantity</span>
+      <span class="col-span-1 font-semibold text-center">Price</span>
+      <span class="col-span-1 font-semibold text-center">Actions</span>
+    </div>
+    <mat-divider></mat-divider>
+    <div
+      *ngFor="let cart of cartData; let i = index"
+      class="grid grid-cols-5 items-center space-x-2 my-6"
+    >
+      <span class="col-span-1 border-r-2 border-gray-200 text-center">{{
+        i + 1
+      }}</span>
+      <span class="col-span-1 border-r-2 border-gray-200 text-center">{{
+        cart.name
+      }}</span>
+      <span class="col-span-1 border-r-2 border-gray-200 text-center">{{
+        cart.qty
+      }}</span>
+      <span class="col-span-1 border-r-2 border-gray-200 text-center"
+        >₹{{ cart.price }}</span
+      >
+      <button
+        (click)="removeItem(i)"
+        mat-stroked-button
+        color="warn"
+        class="col-span-1 !rounded-full"
+      >
+        <mat-icon>delete_outline</mat-icon>Remove
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="grid grid-cols-5 space-x-2 mt-4">
+      <div class="col-span-1"></div>
+      <div class="col-span-1"></div>
+      <div class="col-span-1"></div>
+      <button
+        (click)="cancel()"
+        mat-stroked-button
+        color="primary"
+        class="col-span-1 !rounded-full"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="purchase()"
+        mat-flat-button
+        color="primary"
+        class="col-span-1 !rounded-full !text-white"
+      >
+        Buy
+      </button>
+    </div>
+  </div>
+  <div
+    *ngIf="cartData.length == 0"
+    class="flex flex-col justify-center items-center text-gray-400 min-h-full w-full"
+  >
+    <div class="h-full relative top-5">
+      <span>Your cart is empty</span>
+    </div>
+  </div>
+</mat-dialog-content>

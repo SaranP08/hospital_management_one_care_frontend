@@ -1,0 +1,72 @@
+<div class="p-8 flex flex-col justify-center w-full">
+  <div class="flex flex-col items-center justify-center">
+    <div
+      class="h-60 w-full border-2 border-gray-200 bg-white rounded-lg flex justify-center items-center"
+    >
+      <img class="h-52 w-72" [src]="data.imageUrl" />
+    </div>
+    <div class="my-3">
+      <span class="text-lg font1 font-semibold">{{
+        data.name | uppercase
+      }}</span>
+    </div>
+    <div class="w-full">
+      <span class="font2 text-gray-500 text-xs leading-none">{{
+        data.description
+      }}</span>
+    </div>
+    <div class="flex flex-row justify-between w-full h-full">
+      <div class="flex flex-col justify-start w-full">
+        <div class="w-full my-2">
+          <div>
+            <span class="text-gray-400 font2 font-bold !tracking-wider"
+              >MRP</span
+            >
+          </div>
+        </div>
+        <div class="flex justify-start w-full">
+          <div>
+            <span class="text-2xl font-extrabold text-gray-600"
+              >₹{{ price }}</span
+            >
+          </div>
+        </div>
+        <div *ngIf="data.qty <= 5" class="text-red-500 text-sm mb-2">
+          <span>Only {{ data.qty }} stocks left</span>
+        </div>
+      </div>
+      <div class="mt-2 grid grid-cols-1 md:grid-cols-3">
+        <span class="hidden md:block col-span-1"></span>
+        <span class="hidden md:block col-span-1"></span>
+        <mat-form-field class="!col-span-1 w-full" class="quantity-field">
+          <mat-label>Quantity</mat-label>
+          <input
+            matInput
+            type="number"
+            min="1"
+            value="1"
+            [formControl]="quantity"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="w-full">
+      <button
+        *ngIf="data.qty !== 0"
+        (click)="addProducts()"
+        class="w-full !text-white"
+        mat-flat-button
+        color="primary"
+      >
+        Add to Cart
+      </button>
+      <button
+        *ngIf="data.qty === 0"
+        class="w-full !text-black !bg-gray-300"
+        mat-flat-button
+      >
+        Out of stock
+      </button>
+    </div>
+  </div>
+</div>

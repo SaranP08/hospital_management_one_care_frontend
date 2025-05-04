@@ -1,0 +1,92 @@
+/* Structure */
+.example-container {
+  position: relative;
+  width: 82%;
+}
+
+.example-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 400px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.scrolling-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  overflow: auto;
+}
+
+th.mat-header-cell {
+  color: white;
+  background-color: #7594a0;
+}
+
+::ng-deep .mat-paginator {
+  // override material paginator page switch
+  .mat-paginator-range-label {
+    white-space: nowrap;
+    min-width: 10rem;
+  }
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.min-width-cells {
+  min-width: 10rem;
+
+  &--sm {
+    min-width: 4rem;
+  }
+
+  &--md {
+    min-width: 10rem;
+  }
+
+  &--lg {
+    min-width: 15rem;
+  }
+}
+
+.mat-paginator-range-label {
+  min-width: 40px !important;
+}
+
+body.light .mat-fab:not([class*="mat-elevation-z"]),
+body.light .mat-mini-fab:not([class*="mat-elevation-z"]),
+body .light .mat-fab:not([class*="mat-elevation-z"]),
+body .light .mat-mini-fab:not([class*="mat-elevation-z"]) {
+  box-shadow: none;
+}
+
+.callender {
+  width: 50px;
+}
+
+.m--12 {
+  margin-left: -12px;
+}
+.multiple-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+.table-container {
+  overflow-x: auto;
+  max-height: 350px;
+  overflow-y: scroll;
+  min-width: 100% !important;
+}
+.table-dummy-container {
+  height: 350px;
+
+  min-width: 100% !important;
+}

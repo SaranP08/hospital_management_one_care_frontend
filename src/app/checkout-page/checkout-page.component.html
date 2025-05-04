@@ -1,0 +1,253 @@
+<div
+  class="bg-gradient-to-r py-10 from-pink-50 to-pink-200 min-h-full w-full flex flex-col items-center"
+>
+  <div
+    class="w-4/5 bg-gradient-to-r from-pink-100 to-white rounded px-3 md:px-10 py-10"
+  >
+    <div class="flex justify-between items-center">
+      <div class="w-full flex flex-col items-center md:items-start mb-2">
+        <div>
+          <span class="text-4xl font-bold font2">Checkout</span>
+        </div>
+        <div>
+          <span class="font2 text-xs md:text-sm text-red-500 font-semibold"
+            >Home / Services / Medicines / Checkout</span
+          >
+        </div>
+      </div>
+    </div>
+    <mat-divider class="mb-5"></mat-divider>
+    <div
+      class="bg-gradient-to-r from-white from-20% to-gray-200 py-4 !px-2 md:!px-6 rounded-lg"
+    >
+      <div class="mb-2">
+        <span class="font2 text-md md:text-lg font-bold"
+          >You're almost there...!</span
+        >
+      </div>
+
+      <div>
+        <mat-stepper orientation="vertical">
+          <mat-step [stepControl]="addressFormControl">
+            <ng-template matStepLabel>Delivery Address</ng-template>
+            <ng-template matStepContent>
+              <div class="my-3">
+                <mat-radio-group
+                  [formControl]="addressFormControl"
+                  class="grid grid-cols-3 gap-x-7 gap-y-7"
+                >
+                  <div
+                    *ngFor="let address of addresses; let i = index"
+                    class=""
+                  >
+                    <div
+                      class="relative col-span-1 bg-gray-50 border-2 border-gray-300 rounded-lg p-2 w-5/6 h-40 flex flex-col justify-center items-center"
+                    >
+                      <div class="absolute top-0 left-0 my-1 mx-2 flex">
+                        <mat-radio-button [value]="i"></mat-radio-button>
+                      </div>
+                      <div class="mb-2">
+                        <div class="font-bold">{{ address.name }},</div>
+                        <span
+                          >{{ address.houseNo }}, {{ address.street }},
+                          <span *ngIf="address?.landmark !== ''"
+                            >({{ address?.landmark }})</span
+                          ></span
+                        >
+
+                        <div>{{ address.city }},</div>
+                        <div>{{ address.state }}, - {{ address.pincode }}</div>
+                        <div class="font-semibold">
+                          <span class="font-medium">Ph: </span
+                          >{{ address.phone }}
+                        </div>
+                      </div>
+                      <!-- <div class="absolute bottom-1">
+              <span
+                class="cursor-pointer hover:underline text-cyan-600 mx-1 text-sm"
+                >Edit</span
+              >
+              <span class="text-cyan-600">|</span>
+              <span class="cursor-pointer hover:underline text-cyan-600 mx-1"
+                >Remove</span
+              >
+            </div> -->
+                    </div>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <button
+                class="!text-cyan-600 !rounded-full"
+                mat-stroked-button
+                matStepperNext
+              >
+                Next
+              </button>
+            </ng-template>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Order Summary</ng-template>
+            <ng-template matStepContent>
+              <div class="my-3" *ngFor="let cart of carts">
+                <div class="flex items-center w-2/5">
+                  <div class="border-2 border-gray-300 w-20 rounded p-2">
+                    <img class="w-16" [src]="cart.imageUrl" />
+                  </div>
+                  <div class="mx-4">
+                    <span class="font2 font-semibold !text-sm">{{
+                      cart.name
+                    }}</span>
+                    <div>
+                      <span class="font2 text-xs text-gray-500">
+                        Qty: {{ cart.qty }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="mx-4 font-semibold text-sm flex justify-end">
+                    <div>₹ {{ cart.actualCost * cart.qty }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <mat-divider class="w-1/2 my-2"></mat-divider>
+              <div class="text-lg mt-4 mb-2 font-semibold">
+                <span> Total Cost: ₹ {{ totalCost }}</span>
+              </div>
+              <button
+                class="!text-cyan-600 !rounded-full"
+                mat-stroked-button
+                matStepperNext
+              >
+                Next
+              </button>
+            </ng-template>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Payment Details</ng-template>
+            <div class="font2 py-2">
+              <mat-radio-group [formControl]="paymentMode">
+                <mat-radio-button class="mr-3" value="ONLINE_TRANSACTION"
+                  >Credit / Debit Card</mat-radio-button
+                >
+                <mat-radio-button value="CASH_ON_DELIVERY"
+                  >Cash on Delivery</mat-radio-button
+                >
+              </mat-radio-group>
+
+              <div
+                [formGroup]="paymentFormGroup"
+                *ngIf="paymentMode.value === 'ONLINE_TRANSACTION'"
+                class="grid grid-cols-3 w-1/2 gap-3 mx-3 my-4"
+              >
+                <div
+                  class="w-3/4 col-span-1 border-2 border-gray-200 rounded flex justify-center"
+                >
+                  <img class="h-20 w-16" src="../../assets/visa2.png" />
+                </div>
+                <div
+                  class="w-3/4 col-span-1 border-2 border-gray-200 rounded flex justify-center items-center"
+                >
+                  <img class="h-12 w-20" src="../../assets/maestro2.png" />
+                </div>
+                <div
+                  class="w-3/4 col-span-1 border-2 border-gray-200 rounded flex justify-center items-center"
+                >
+                  <img class="h-12 w-20" src="../../assets/rupay.png" />
+                </div>
+                <mat-form-field class="col-span-3">
+                  <mat-label class="font2 text-xs">NAME ON CARD</mat-label>
+                  <input formControlName="name" matInput type="text" />
+                  <mat-error
+                    *ngIf="paymentFormGroup.get('name')?.hasError('required')"
+                    >Name is required</mat-error
+                  >
+                </mat-form-field>
+                <mat-form-field class="col-span-3">
+                  <mat-label class="font2 text-xs">CARD NUMBER</mat-label>
+                  <input formControlName="cardNumber" matInput type="text" />
+                  <mat-error
+                    *ngIf="
+                      paymentFormGroup.get('cardNumber')?.hasError('required')
+                    "
+                    >Card Number is required</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      paymentFormGroup.get('cardNumber')?.hasError('minlength')
+                    "
+                    >Enter valid card number</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      paymentFormGroup.get('cardNumber')?.hasError('maxlength')
+                    "
+                    >Enter valid card number</mat-error
+                  >
+                </mat-form-field>
+
+                <mat-form-field class="col-span-1">
+                  <mat-label class="font2 text-xs">MONTH</mat-label>
+                  <mat-select formControlName="month">
+                    <mat-option *ngFor="let month of months" [value]="month">{{
+                      month
+                    }}</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="paymentFormGroup.get('month')?.hasError('required')"
+                    >Month is required</mat-error
+                  >
+                </mat-form-field>
+                <mat-form-field class="col-span-1">
+                  <mat-label class="font2 text-xs">YEAR</mat-label>
+                  <mat-select formControlName="year">
+                    <mat-option *ngFor="let year of years" [value]="year">{{
+                      year
+                    }}</mat-option>
+                  </mat-select>
+                  <mat-error
+                    *ngIf="paymentFormGroup.get('year')?.hasError('required')"
+                    >Year is required</mat-error
+                  >
+                </mat-form-field>
+                <mat-form-field class="col-span-1">
+                  <mat-label class="font2 text-xs">CVV</mat-label>
+                  <input formControlName="cvv" matInput type="text" />
+                  <mat-error
+                    *ngIf="paymentFormGroup.get('cvv')?.hasError('required')"
+                    >Cvv is required</mat-error
+                  >
+                  <mat-error
+                    *ngIf="paymentFormGroup.get('cvv')?.hasError('minlength')"
+                    >Enter valid cvv number</mat-error
+                  >
+                  <mat-error
+                    *ngIf="paymentFormGroup.get('cvv')?.hasError('maxlength')"
+                    >Enter valid cvv number</mat-error
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+
+            <button
+              class="!text-cyan-600 !rounded-full ml-3"
+              mat-stroked-button
+              matStepperPrevious
+            >
+              Back
+            </button>
+            <button
+              (click)="payNow()"
+              class="!bg-cyan-600 !text-white !rounded-full ml-3"
+              mat-flat-button
+              matStepperPrevious
+            >
+              Pay Now
+            </button>
+          </mat-step>
+        </mat-stepper>
+      </div>
+    </div>
+    <!-- Mobile view -->
+  </div>
+</div>

@@ -1,0 +1,188 @@
+<div
+  class="bg-gradient-to-r py-10 from-pink-50 to-pink-200 min-h-full w-full flex flex-col justify-center items-center"
+>
+  <div
+    class="w-4/5 bg-gradient-to-r from-pink-100 to-white rounded px-10 md:px-20 py-4"
+  >
+    <div class="flex items-center">
+      <div class="w-full flex flex-col items-center md:items-start mt-5 mb-3">
+        <div>
+          <span class="text-4xl font-bold font2">Cart</span>
+        </div>
+        <div>
+          <span class="font2 text-xs md:text-sm text-red-500 font-semibold"
+            >Home / Services / Medicines / Cart</span
+          >
+        </div>
+      </div>
+    </div>
+    <mat-divider class="mb-3"></mat-divider>
+
+    <div
+      *ngIf="carts.carts.length !== 0"
+      class="hidden md:block bg-gradient-to-r from-white from-20% to-gray-200 py-4 px-5 rounded-lg"
+    >
+      <div class="grid grid-cols-6 gap-2">
+        <div class="col-span-2 font2 font-semibold">Item</div>
+        <div class="col-span-1 font2 font-semibold">Price</div>
+        <div class="col-span-1 font2 font-semibold">Quantity</div>
+        <div class="col-span-1 font2 font-semibold">Total</div>
+        <div class="col-span-1 font2 font-semibold">Action</div>
+        <mat-divider class="col-span-6 my-2"></mat-divider>
+        <div
+          [formGroup]="cartForm"
+          class="col-span-6"
+          *ngFor="let cart of carts.carts; let i = index"
+        >
+          <div class="col-span-6 items-center grid grid-cols-6">
+            <div
+              formArrayName="selectedIndex"
+              class="col-span-2 font2 flex items-center"
+            >
+              <div class="mx-2">
+                <mat-checkbox
+                  [formControlName]="i"
+                  class="example-margin"
+                ></mat-checkbox>
+              </div>
+              <div class="flex items-center">
+                <img class="h-16 w-14 rounded-lg" [src]="cart.imageUrl" />
+
+                <div class="font-semibold ml-7">{{ cart.name }}</div>
+              </div>
+            </div>
+            <div class="col-span-1">
+              <div class="font-medium">₹ {{ cart.actualCost }}</div>
+            </div>
+
+            <div
+              formArrayName="quantities"
+              class="col-span-1 grid grid-cols-2 mt-2"
+            >
+              <mat-form-field class="col-span-2" class="quantity-field">
+                <input
+                  [formControlName]="i"
+                  matInput
+                  type="number"
+                  min="1"
+                  value="1"
+                />
+                <mat-error *ngIf="quantities.at(i)?.hasError('max')"
+                  >Limit exceeded</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-span-1 font-medium">
+              ₹ {{ cart.actualCost * quantities.at(i).value }}
+            </div>
+            <div class="col-span-1 font-medium">
+              <button (click)="deleteProduct(i)" mat-icon-button>
+                <mat-icon class="text-red-600">delete</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <mat-divider class="col-span-6 my-3"></mat-divider>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile view -->
+    <div
+      *ngIf="carts.carts.length !== 0"
+      class="block md:hidden bg-gradient-to-r from-white from-20% to-gray-200 p-2 rounded-lg"
+    >
+      <div
+        [formGroup]="cartForm"
+        class="w-full py-2"
+        *ngFor="let cart of carts.carts; let i = index"
+      >
+        <div class="flex flex-col items-center w-full">
+          <div class="flex w-full">
+            <div class="flex justify-start" formArrayName="selectedIndex">
+              <mat-checkbox
+                [formControlName]="i"
+                class="example-margin"
+              ></mat-checkbox>
+            </div>
+            <div class="ml-4">
+              <img class="h-32 w-24 rounded" [src]="cart.imageUrl" />
+            </div>
+          </div>
+          <div class="flex justify-between items-center w-full px-2">
+            <div class="font-bold mr-2">
+              <div class="font2">{{ cart.name }}</div>
+              <div class="font-medium text-gray-500">
+                ₹ {{ cart.actualCost }}
+              </div>
+            </div>
+            <div>
+              <div
+                class="grid grid-cols-1 mt-2 gap-x-3"
+                formArrayName="quantities"
+              >
+                <mat-form-field
+                  class="col-span-1 mb-3 ml-2 w-1/2"
+                  class="quantity-field"
+                >
+                  <input
+                    class="w-1/2"
+                    [formControlName]="i"
+                    matInput
+                    type="number"
+                    min="1"
+                  />
+                  <mat-error *ngIf="quantities.at(i)?.hasError('max')"
+                    >Out of stock</mat-error
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="ml-5"></div>
+        </div>
+
+        <mat-divider *ngIf="i !== carts.carts.length - 1"></mat-divider>
+      </div>
+    </div>
+
+    <div
+      *ngIf="carts.carts.length === 0"
+      class="flex flex-col justify-center items-center mb-4"
+    >
+      <div class="font2 my-2 text-center">You cart is Empty...</div>
+      <div>
+        <button
+          routerLink="../"
+          class="!bg-cyan-500 !text-white !rounded-full"
+          mat-flat-button
+        >
+          Buy medicines
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="absolute bottom-0 w-full h-14 bg-white px-3 flex flex-row items-center justify-between md:justify-end"
+>
+  <div class="font-semibold text-xl md:mr-3">
+    <span class="text-gray-600 font2">Total Cost </span>₹ {{ totalCost }}
+  </div>
+  <div>
+    <button
+      (click)="goToCheckOutPage()"
+      [ngClass]="
+        isSelected && quantities.valid
+          ? '!bg-cyan-600 !text-white'
+          : '!bg-white !text-black !cursor-not-allowed'
+      "
+      [disabled]="!isSelected || !quantities.valid"
+      mat-flat-button
+      class=""
+    >
+      Checkout
+    </button>
+  </div>
+</div>

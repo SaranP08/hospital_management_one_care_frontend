@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Delete?</h2>
+<mat-dialog-content class="">
+  <p>Are you sure you want to delete the address?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    class="!text-white rounded-full !bg-red-500"
+    mat-flat-button
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Delete
+  </button>
+</mat-dialog-actions>

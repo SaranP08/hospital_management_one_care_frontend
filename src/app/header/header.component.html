@@ -1,0 +1,152 @@
+<mat-toolbar class="!bg-white shadow-md">
+  <mat-menu #menu="matMenu" class="w-full">
+    <button routerLink="/" mat-menu-item class="w-full hover:text-pink-600">
+      Home
+    </button>
+    <button routerLink="/services" mat-menu-item class="hover:text-pink-600">
+      Services
+    </button>
+  </mat-menu>
+  <div class="example-sidenav-content md:hidden mr-2">
+    <button [matMenuTriggerFor]="menu" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div [routerLink]="['/']" class="flex items-center cursor-pointer">
+    <img class="hidden h-10 md:block" src="../../assets/hospital_logo.jpeg" />
+
+    <span class="text-grey-600 md:mx-4">One Care</span>
+  </div>
+  <span class="example-spacer"></span>
+  <div class="text-sm text-gray-600 flex items-center flex-row">
+    <div class="mx-3 hidden md:block">
+      <span
+        routerLink="/"
+        class="cursor-pointer hover:text-pink-600 transition flex items-center"
+      >
+        Home</span
+      >
+    </div>
+    <div class="mx-3 hidden md:block">
+      <span
+        routerLink="/services"
+        class="cursor-pointer hover:text-cyan-600 transition"
+        >Services</span
+      >
+    </div>
+
+    <div *ngIf="!isLoggedIn" class="mx-3 hidden md:block">
+      <button
+        routerLink="/login"
+        mat-flat-button
+        class="!bg-pink-600 !text-white !rounded-full flex items-center"
+      >
+        <mat-icon class="">account_circle</mat-icon>
+        Login
+      </button>
+    </div>
+    <div *ngIf="isLoggedIn" class="mx-1 hidden md:block">
+      <mat-menu #menu1="matMenu" class="w-full">
+        <button
+          routerLink="/my-bookings"
+          mat-menu-item
+          class="hover:text-pink-600"
+        >
+          <mat-icon>calendar_today</mat-icon>
+          My Schedules
+        </button>
+
+        <button
+          routerLink="/my-orders"
+          mat-menu-item
+          class="hover:text-pink-600"
+        >
+          <mat-icon>event_note</mat-icon>
+          My Orders
+        </button>
+        <button
+          routerLink="services/medicines/cart"
+          mat-menu-item
+          class="hover:text-pink-600"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+          My Cart
+        </button>
+        <button routerLink="profile" mat-menu-item class="hover:text-cyan-600">
+          <mat-icon>account_circle</mat-icon>
+          My Profile
+        </button>
+
+        <button
+          (click)="signOut()"
+          mat-menu-item
+          class="flex items-center justify-center !text-red-500 hover:text-cyan-600"
+        >
+          <mat-icon class="!text-red-500">exit_to_app</mat-icon>
+          Sign Out
+        </button>
+      </mat-menu>
+      <div class="example-sidenav-content mr-2">
+        <button [matMenuTriggerFor]="menu1" mat-icon-button>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="!isLoggedIn" class="mx-3 block md:hidden">
+      <button
+        routerLink="/login"
+        mat-icon-button
+        class="flex items-center justify-center !text-cyan-600 !rounded-full"
+      >
+        <mat-icon class="">account_circle</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="isLoggedIn" class="block md:hidden">
+      <mat-menu #menu1="matMenu" class="w-full">
+        <button
+          routerLink="/my-bookings"
+          mat-menu-item
+          class="hover:text-pink-600"
+        >
+          <mat-icon>calendar_today</mat-icon>
+          My Schedules
+        </button>
+
+        <button
+          routerLink="/my-orders"
+          mat-menu-item
+          class="hover:text-pink-600"
+        >
+          <mat-icon>event_note</mat-icon>
+          My Orders
+        </button>
+        <button
+          routerLink="services/medicines/cart"
+          mat-menu-item
+          class="hover:text-pink-600"
+        >
+          <mat-icon>shopping_cart</mat-icon>
+          My Cart
+        </button>
+        <button routerLink="profile" mat-menu-item class="hover:text-cyan-600">
+          <mat-icon>account_circle</mat-icon>
+          My Profile
+        </button>
+
+        <button
+          (click)="signOut()"
+          mat-menu-item
+          class="flex items-center justify-center !text-red-500 hover:text-cyan-600"
+        >
+          <mat-icon class="!text-red-500">exit_to_app</mat-icon>
+          Sign Out
+        </button>
+      </mat-menu>
+      <div class="example-sidenav-content mr-2">
+        <button [matMenuTriggerFor]="menu1" mat-icon-button>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

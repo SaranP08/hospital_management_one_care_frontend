@@ -1,0 +1,109 @@
+<div
+  class="bg-gradient-to-r py-10 from-pink-50 to-pink-200 h-full w-full flex flex-col justify-center items-center"
+>
+  <div
+    class="w-4/5 bg-gradient-to-r from-pink-100 to-white rounded px-10 md:px-20 shadow-lg"
+  >
+    <div class="flex items-center">
+      <div class="w-full mt-5 mb-3 flex flex-col">
+        <div>
+          <span class="text-4xl font-bold font2">My Bookings</span>
+        </div>
+        <div>
+          <span class="font2 text-red-500 font-semibold"
+            >Home / My Bookings</span
+          >
+        </div>
+      </div>
+    </div>
+    <mat-divider class="mb-10"></mat-divider>
+    <div
+      *ngIf="dataSource.length !== 0"
+      class="my-8 table-container overflow-x-auto w-full md:w-full rounded-xl shadow-lg"
+    >
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 example-table w-full md:w-full table-fixed p-2"
+      >
+        <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="sno">
+          <th mat-header-cell *matHeaderCellDef>S.No</th>
+          <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+        <ng-container matColumnDef="doctorName">
+          <th mat-header-cell *matHeaderCellDef>Doctor Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.doctorName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef>Gender</th>
+          <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+        </ng-container>
+        <ng-container matColumnDef="specializedIn">
+          <th mat-header-cell *matHeaderCellDef>Specialized In</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.specializedIn }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.date | date : "mediumDate" }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="schedule">
+          <th mat-header-cell *matHeaderCellDef>Schedule</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.startTime }}:00 - {{ element.endTime }}:00
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="fee">
+          <th mat-header-cell *matHeaderCellDef>Fee</th>
+          <td mat-cell *matCellDef="let element">{{ element.generalFee }}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button
+              *ngIf="element.isCancel"
+              (click)="cancelBooking(i)"
+              mat-flat-button
+              class="!bg-red-500 !text-white !rounded-full"
+            >
+              Cancel
+            </button>
+            <span class="text-center" *ngIf="!element.isCancel">-</span>
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <div *ngIf="isLoading" class="flex justify-center my-5">
+      <mat-spinner [diameter]="40"></mat-spinner>
+    </div>
+    <div
+      *ngIf="dataSource.length === 0 && !isLoading"
+      class="flex flex-col justify-center items-center mt-3 my-5"
+    >
+      <div class="font2 my-2 text-center">
+        You have not made any bookings yet...
+      </div>
+      <div>
+        <button
+          routerLink="/medical-appointment"
+          class="!bg-cyan-500 !text-white !rounded-full"
+          mat-flat-button
+        >
+          Schedule Appointment
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

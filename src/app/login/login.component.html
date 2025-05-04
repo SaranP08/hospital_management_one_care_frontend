@@ -1,0 +1,423 @@
+<div class="h-full w-full flex flex-row">
+  <div class="w-full sm:w-1/4 md:w-1/2 relative">
+    <img
+      class="h-full w-full object-cover opacity-100"
+      src="../../assets/doctor1.jpg"
+    />
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-pink-100 from-40% to-pink-600 opacity-60"
+    ></div>
+  </div>
+  <div
+    class="w-full sm:w-3/4 md:w-1/2 absolute sm:relative h-full bg-pink-50 flex items-center"
+  >
+    <!-- Login -->
+    <div
+      *ngIf="!isForgetPassword && !isMailSent && !isChangePassword"
+      class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
+    >
+      <div class="flex flex-col justify-center items-center mb-3">
+        <div>
+          <img class="h-8" src="../../assets/logo.png" />
+        </div>
+        <div>
+          <span class="font2 font-bold text-2xl">Login</span>
+        </div>
+        <div>
+          <span class="font2 text-sm text-gray-400"
+            >Sign in to your account...</span
+          >
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div [formGroup]="loginFormGroup">
+        <div class="flex flex-col mt-5 mb-3.5">
+          <mat-form-field class="">
+            <mat-label class="font2">Email</mat-label>
+            <input type="text" matInput formControlName="email" />
+            <mat-error
+              class="my-1"
+              *ngIf="loginFormGroup.get('email')?.hasError('required')"
+            >
+              Email is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="loginFormGroup.get('email')?.hasError('email')"
+            >
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label class="font2">Password</mat-label>
+            <input type="password" matInput formControlName="password" />
+            <mat-error
+              class="my-1"
+              *ngIf="loginFormGroup.get('password')?.hasError('required')"
+            >
+              Password is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="loginFormGroup.get('password')?.hasError('minlength')"
+            >
+              Password must be at least 6 characters
+            </mat-error>
+          </mat-form-field>
+          <span
+            class="text-red-500 text-xs ml-1"
+            *ngIf="errorMsg && errorMsg !== ''"
+            >*{{ errorMsg }}</span
+          >
+          <div class="text-end">
+            <span
+              (click)="isForgetPassword = true"
+              class="text-sm text-cyan-600 p-0 cursor-pointer hover:underline"
+              >Forgot Password?</span
+            >
+          </div>
+        </div>
+        <div class="mb-3">
+          <button
+            (click)="login()"
+            [disabled]="!loginFormGroup.valid || isLoading"
+            mat-flat-button
+            class="!text-white w-full"
+            color="primary"
+          >
+            <span *ngIf="isLoading">
+              <mat-spinner [diameter]="15"></mat-spinner>
+            </span>
+            <span *ngIf="!isLoading"> Sign in </span>
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <span class="text-sm font-bold font2"
+          >Don't have an account? &nbsp;</span
+        ><span
+          [routerLink]="['/signup']"
+          class="text-cyan-600 cursor-pointer hover:underline"
+          >Sign Up</span
+        >
+      </div>
+    </div>
+
+    <!-- Email Verification -->
+    <div
+      *ngIf="isForgetPassword && !isMailSent"
+      class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
+    >
+      <div class="flex flex-col justify-center items-center mb-3">
+        <div>
+          <img class="h-8" src="../../assets/logo.png" />
+        </div>
+        <div>
+          <span class="font2 font-bold text-2xl">Reset your password</span>
+        </div>
+        <div>
+          <span class="font2 text-sm text-gray-400"
+            >Please enter your email for verification</span
+          >
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="flex flex-col mt-4 mb-2">
+        <mat-form-field class="m-0">
+          <mat-label class="font2">Email</mat-label>
+          <input [formControl]="emailForVerification" type="text" matInput />
+          <mat-error
+            class="my-1"
+            *ngIf="emailForVerification?.hasError('required')"
+          >
+            Email is required
+          </mat-error>
+          <mat-error
+            class="my-1"
+            *ngIf="emailForVerification?.hasError('email')"
+          >
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
+        <span
+          class="text-red-500 text-xs ml-1 relative bottom-2"
+          *ngIf="errorMsg2 && errorMsg2 !== ''"
+          >*{{ errorMsg2 }}</span
+        >
+      </div>
+      <div class="mb-3">
+        <button
+          (click)="resetPassword()"
+          [disabled]="isLoading"
+          mat-flat-button
+          class="!text-white w-full"
+          color="primary"
+        >
+          <span *ngIf="isLoading">
+            <mat-spinner [diameter]="15"></mat-spinner>
+          </span>
+          <span *ngIf="!isLoading"> Reset </span>
+        </button>
+      </div>
+      <div class="flex justify-center">
+        <span class="text-sm font-bold font2"
+          >Back to &nbsp;<span
+            (click)="isForgetPassword = false"
+            class="text-pink-600 cursor-pointer hover:underline"
+            >Login</span
+          ></span
+        >
+      </div>
+    </div>
+
+    <!-- Otp verification -->
+    <div
+      *ngIf="isMailSent"
+      class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
+    >
+      <div class="flex justify-center items-center w-full relative">
+        <button
+          (click)="isMailSent = false"
+          class="absolute right-32"
+          mat-icon-button
+        >
+          <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        <div class="flex flex-col justify-center items-center mb-3">
+          <div>
+            <img class="h-8" src="../../assets/logo.ico" alt="Logo" />
+          </div>
+          <div>
+            <span class="font2 font-bold text-2xl">OTP Verification</span>
+          </div>
+          <div>
+            <span class="font2 text-sm text-gray-400"
+              >Please enter the OTP sent to your email</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="w-full flex items-center justify-center mt-4 mb-2">
+        <div class="grid items-center grid-cols-6 gap-2">
+          <span class="col-span-1"></span>
+          <mat-form-field appearance="outline" class="col-span-1">
+            <input
+              [(ngModel)]="otpDigit1"
+              type="text"
+              #txt1
+              maxlength="1"
+              matInput
+              (keyup)="move($event, '', txt1, txt2)"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-1">
+            <input
+              [(ngModel)]="otpDigit2"
+              type="text"
+              #txt2
+              maxlength="1"
+              matInput
+              (keyup)="move($event, txt1, txt2, txt3)"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-1">
+            <input
+              [(ngModel)]="otpDigit3"
+              type="text"
+              #txt3
+              maxlength="1"
+              matInput
+              (keyup)="move($event, txt2, txt3, txt4)"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-1">
+            <input
+              [(ngModel)]="otpDigit4"
+              type="text"
+              #txt4
+              maxlength="1"
+              matInput
+              (keyup)="move($event, txt3, txt4, '')"
+            />
+          </mat-form-field>
+
+          <span class="col-span-1"></span>
+        </div>
+      </div>
+      <div class="text-center">
+        <span
+          class="w-full text-red-500 text-center relative bottom-4 text-xs ml-1"
+          *ngIf="errorMsg3 && errorMsg3 !== ''"
+          >*{{ errorMsg3 }}</span
+        >
+      </div>
+      <div class="mb-3">
+        <button
+          (click)="otpVerify()"
+          [disabled]="
+            otpDigit1 === '' ||
+            otpDigit2 === '' ||
+            otpDigit3 === '' ||
+            otpDigit4 === '' ||
+            isLoading
+          "
+          mat-flat-button
+          class="!text-white w-full"
+          color="primary"
+        >
+          <span *ngIf="isLoading">
+            <mat-spinner [diameter]="15"></mat-spinner>
+          </span>
+          <span *ngIf="!isLoading"> Verify </span>
+        </button>
+      </div>
+      <div class="flex justify-center">
+        <span
+          (click)="isMailSent = false"
+          class="text-pink-600 cursor-pointer hover:underline"
+          >Resend OTP</span
+        >
+      </div>
+    </div>
+
+    <div
+      *ngIf="isChangePassword"
+      class="w-full rounded bg-white mx-14 px-6 py-7 shadow-lg"
+    >
+      <div class="flex flex-col justify-center items-center mb-3">
+        <div>
+          <img class="h-8" src="../../assets/logo.png" />
+        </div>
+        <div>
+          <span class="font2 font-bold text-2xl">Change Password</span>
+        </div>
+        <div>
+          <span class="font2 text-sm text-gray-400"
+            >Update your password...</span
+          >
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div>
+        <div class="flex flex-col mt-5 mb-3.5">
+          <mat-form-field class="">
+            <mat-label class="font2">New Password</mat-label>
+            <input type="password" matInput [formControl]="newPassword" />
+            <mat-error class="my-1" *ngIf="newPassword?.hasError('required')">
+              Password is required
+            </mat-error>
+            <mat-error class="my-1" *ngIf="newPassword?.hasError('minlength')">
+              Password must contains atleast 6 characters
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="mt-2">
+            <mat-label class="font2">Confirm Password</mat-label>
+            <input type="password" matInput [formControl]="confirmPassword" />
+            <mat-error
+              class="my-1"
+              *ngIf="confirmPassword?.hasError('required')"
+            >
+              Confirm Password is required
+            </mat-error>
+            <mat-error
+              class="my-1"
+              *ngIf="confirmPassword?.hasError('minlength')"
+            >
+              Password must contains atleast 6 characters
+            </mat-error>
+          </mat-form-field>
+          <span
+            class="text-red-500 text-xs ml-1"
+            *ngIf="
+              confirmPassword?.value !== '' &&
+              !confirmPassword?.hasError('minlength') &&
+              confirmPassword?.value !== newPassword?.value
+            "
+          >
+            *Password and Confirm Password doesn't match
+          </span>
+          <span
+            class="text-red-500 text-xs ml-1 absolute"
+            *ngIf="errorMsg && errorMsg !== ''"
+            >*{{ errorMsg }}</span
+          >
+        </div>
+        <div class="mb-3">
+          <button
+            (click)="createNewPassword()"
+            [disabled]="
+              !newPassword.valid ||
+              !confirmPassword.valid ||
+              newPassword.value !== confirmPassword.value ||
+              isLoading
+            "
+            mat-flat-button
+            class="!text-white w-full"
+            color="primary"
+          >
+            <span *ngIf="isLoading">
+              <mat-spinner [diameter]="15"></mat-spinner>
+            </span>
+            <span *ngIf="!isLoading"> Create New Password </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div
+  class="min-h-full bg-gradient-to-r from-cyan-50 to-cyan-200 flex items-center justify-center"
+>
+  <div
+    class="bg-white max-w-md w-full rounded-lg shadow-lg py-3 border-solid border-2 border-black-600"
+  >
+    <div class="flex justify-center items-center">
+      <div class="bg-white-500 max-w-md px-11 py-10">
+        <p class="py-1 text-3xl">LOGIN</p>
+
+        <input
+          class="mb-2 w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+          type="text"
+          name="username"
+          placeholder="Email Address"
+          required
+        />
+        <input
+          class="w-72 h-10 text-base px-3 py-3 border-solid border-2 border-gray-300 box-border transition duration-500 focus:outline-none focus:border-red-500"
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <br /><br />
+        <input
+          class="text-base"
+          type="checkbox"
+          name="rememberMe"
+          value="remember-me"
+          class="rememberMe"
+        />&nbsp;&nbsp;Remember Me <br /><br />
+
+        <button
+          mat-flat-button
+          class="!bg-teal-600 flex justify-center w-full !text-white"
+        >
+          Login</button
+        ><br /><br />
+        <p class="text-base">
+          New Here?&nbsp;&nbsp;<a
+            routerLink="/signup"
+            class="text-blue-600 font-semibold"
+            >Create new account</a
+          >
+        </p>
+      </div>
+    </div>
+   
+  </div>
+</div> -->

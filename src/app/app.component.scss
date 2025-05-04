@@ -1,0 +1,21 @@
+.ss {
+  height: 100% !important;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline__leading {
+  border-color: #026e78 !important;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline__notch {
+  border-color: #026e78 !important;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline__trailing {
+  border-color: #026e78 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick,
+.mat-form-field-appearance-fill .mat-form-field-ripple {
+  border-bottom-style: none !important;
+}

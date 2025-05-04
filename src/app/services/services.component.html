@@ -1,0 +1,123 @@
+<div
+  class="bg-gradient-to-r from-pink-50 to-pink-200 py-10 min-h-full w-full flex flex-col justify-center items-center"
+>
+  <div
+    class="w-4/5 md:px-10 xs:px-3 bg-gradient-to-r from-pink-100 to-gray-50 rounded py-10 shadow-lg"
+  >
+    <div class="w-full flex flex-col items-center md:items-start mb-2">
+      <div>
+        <span class="text-4xl font-bold font2">Services</span>
+      </div>
+      <div>
+        <span class="font2 text-red-500 font-semibold">Home / Services</span>
+      </div>
+    </div>
+    <mat-divider class="mb-10"></mat-divider>
+
+    <div class="flex justify-center md:justify-start w-full mt-10">
+      <div
+        class="flex flex-col justify-center md:grid md:grid-cols-2 items-center w-full relative gap-4"
+      >
+        <mat-card class="col-span-2 md:col-span-1 flex h-64 w-5/6">
+          <mat-card-header
+            class="flex items-center h-full w-full justify-center"
+          >
+            <mat-card-title
+              class="!text-md md:!text-lg text-red-400 !mb-3 text-center"
+              >Medical Appointment<mat-divider class="w-full"></mat-divider
+            ></mat-card-title>
+            <mat-card-subtitle class="flex justify-center w-full"
+              ><div class="w-full flex justify-center">
+                <div>
+                  <img
+                    src="../../assets/schedule.jpg"
+                    class="h-24 mb-20 w-24 rounded-full"
+                  />
+                </div></div
+            ></mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions
+            class="absolute bottom-0 flex justify-center w-full my-6"
+          >
+            <div>
+              <button
+                routerLink="/medical-appointment"
+                class="!rounded-full md:!px-11 w-full hover:shadow-xl !text-white hover:bg-cyan-600 hover:transition hover:!text-white"
+                mat-flat-button
+                color="primary"
+              >
+                Schedule Now
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="col-span-2 md:col-span-1 h-64 w-5/6">
+          <mat-card-header
+            class="flex items-center h-full w-full justify-center"
+          >
+            <mat-card-title
+              class="!text-md md:!text-lg text-red-400 !mb-3 text-center !w-full"
+              >Medicines<mat-divider class="w-full"></mat-divider
+            ></mat-card-title>
+            <mat-card-subtitle class="flex justify-center w-full"
+              ><div class="w-full flex justify-center">
+                <div>
+                  <img
+                    src="../../assets/pharmacy.jpg"
+                    class="h-24 mb-20 w-24 rounded-full"
+                  />
+                </div></div
+            ></mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions
+            class="absolute bottom-0 flex justify-center w-full my-6"
+          >
+            <div>
+              <button
+                routerLink="medicines"
+                class="!rounded-full hover:shadow-xl !text-white md:!px-11 w-full hover:bg-cyan-600 hover:transition hover:!text-white"
+                mat-flat-button
+                color="primary"
+              >
+                Buy
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <!-- <mat-card class="col-span-1 h-64 w-72">
+          <mat-card-header
+            class="flex flex-col items-center h-full w-full justify-center"
+          >
+            <mat-card-title class="text-red-400 !mb-3 w-full"
+              >Vaccination <mat-divider class="w-full"></mat-divider
+            ></mat-card-title>
+
+            <mat-card-subtitle class="flex justify-center w-full"
+              ><div class="w-full flex justify-center">
+                <div>
+                  <img
+                    src="../../assets/appoinment.jpg"
+                    class="h-24 mb-20 w-24 rounded-full"
+                  />
+                </div></div
+            ></mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions
+            class="absolute bottom-0 flex justify-center w-full my-6"
+          >
+            <div>
+              <button
+                class="!rounded-full hover:shadow-xl md:!px-11 w-full !text-white hover:bg-cyan-600 hover:transition hover:!text-white"
+                mat-flat-button
+                color="primary"
+              >
+                Book Slot
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card> -->
+      </div>
+    </div>
+  </div>
+</div>

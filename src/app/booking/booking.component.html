@@ -1,0 +1,245 @@
+<div
+  class="bg-gradient-to-r py-10 from-cyan-50 to-cyan-200 min-h-full w-full flex flex-col items-center"
+>
+  <div
+    class="w-full ml-24 md:ml-80 mt-5 mb-4 md:mb-10 flex flex-col items-start"
+  >
+    <div>
+      <span class="text-4xl font-bold font2">Medical Appointment</span>
+    </div>
+    <div>
+      <span class="font2 text-red-500 font-semibold"
+        >Home / medical-appointment</span
+      >
+    </div>
+  </div>
+  <div
+    [formGroup]="bookingFormGroup"
+    class="bg-gray-50 shadow-lg w-4/5 flex flex-col justify-center items-center rounded-lg"
+  >
+    <div class="font1 font-bold text-2xl text-cyan-800 my-6">
+      Book Appointment
+    </div>
+    <mat-divider class="text-black w-5/6"></mat-divider>
+    <div class="w-5/6">
+      <mat-stepper
+        class="w-full z-0"
+        orientation="vertical"
+        [linear]="true"
+        #stepper
+      >
+        <mat-step
+          [stepControl]="bookingFormGroup"
+          class=""
+          label="Fill the form"
+        >
+          <div class="grid grid-cols-2">
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>First Name </mat-label>
+              <input formControlName="firstName" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('firstName')?.hasError('required')"
+                >First Name is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Last Name </mat-label>
+              <input formControlName="lastName" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('lastName')?.hasError('required')"
+                >Last Name is required</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Gender </mat-label>
+              <mat-select formControlName="gender">
+                <mat-option value="Male">Male</mat-option>
+                <mat-option value="Female">Female</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="bookingFormGroup.get('gender')?.hasError('required')"
+                >Gender is required</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Age </mat-label>
+              <input formControlName="age" type="number" matInput min="1" />
+
+              <mat-error
+                *ngIf="bookingFormGroup.get('age')?.hasError('required')"
+                >Age is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Email </mat-label>
+              <input formControlName="email" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('email')?.hasError('required')"
+                >Email is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  !bookingFormGroup.get('email')?.hasError('required') &&
+                  bookingFormGroup.get('email')?.hasError('invalidEmail')
+                "
+                >Please enter a valid email address</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Choose the Specialist </mat-label>
+              <mat-select formControlName="specialist">
+                <mat-option [value]="name" *ngFor="let name of specialist">{{
+                  name
+                }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="bookingFormGroup.get('specialist')?.hasError('required')"
+                >Specialist field is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Choose the Doctor </mat-label>
+              <mat-select
+                formControlName="doctorId"
+                [disabled]="!bookingFormGroup.get('specialist')?.valid"
+              >
+                <mat-option
+                  [value]="info._id"
+                  *ngFor="let info of doctorDetails"
+                  >{{ info.firstName }}</mat-option
+                >
+              </mat-select>
+              <mat-error
+                *ngIf="bookingFormGroup.get('specialist')?.hasError('required')"
+                >Choose specialist first</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  !bookingFormGroup.get('specialist')?.hasError('required') &&
+                  bookingFormGroup.get('doctorId')?.hasError('required')
+                "
+                >Doctor name is required</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Phone </mat-label>
+              <input formControlName="phone" type="text" matInput />
+              <mat-error
+                *ngIf="bookingFormGroup.get('phone')?.hasError('required')"
+                >Phone number is required</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  !bookingFormGroup.get('phone')?.hasError('required') &&
+                  bookingFormGroup.get('phone')?.hasError('invalidPhone')
+                "
+                >Please enter valid Phone number</mat-error
+              >
+            </mat-form-field>
+            <!-- <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Choose a date </mat-label>
+              <input
+                formControlName="date"
+                matInput
+                [matDatepicker]="picker"
+                [matDatepickerFilter]="myFilter"
+              />
+              <mat-error
+                *ngIf="bookingFormGroup.get('date')?.hasError('required')"
+                >Date is required</mat-error
+              >
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field> -->
+            <mat-form-field class="col-span-2 md:col-span-1 my-2 md:my-4 mr-4">
+              <mat-label>Consulting Fee (Rs)</mat-label>
+              <input type="number" matInput formControlName="fee" />
+            </mat-form-field>
+          </div>
+        </mat-step>
+        <mat-step label="Choose Slot" class="">
+          <mat-accordion class="col-span-2 mb-8 mt-2 bg-gray-100">
+            <mat-expansion-panel
+              #panel
+              hideToggle
+              class="min-w-72 relative right-16 md:right-0"
+            >
+              <mat-expansion-panel-header class="">
+                <mat-panel-title class="flex flex-row">
+                  <div class="flex flex-col w-full">
+                    <div
+                      class="flex flex-col md:flex-row items-center w-full mt-3 mb-3"
+                    >
+                      <span class="mr-1 md:mr-5 text-center"
+                        >Available Slots:</span
+                      >
+
+                      <div class="flex items-center">
+                        <div class="h-2 w-2 rounded bg-cyan-500"></div>
+                        <span class="text-gray-600 mx-1">Available</span>
+                        <div class="h-2 w-2 rounded bg-red-500 ml-3"></div>
+                        <span class="text-gray-600 mx-1">Occupied</span>
+                      </div>
+                    </div>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div>
+                <mat-divider class="w-full"></mat-divider>
+              </div>
+              <mat-tab-group
+                (selectedIndexChange)="onTabChanged($event)"
+                mat-stretch-tabs="false"
+                mat-align-tabs="start"
+              >
+                <mat-tab label="{{ currentDate | date : 'mediumDate' }}"
+                  ><div class="grid grid-cols-4 my-4">
+                    <button
+                      (click)="openDialog(i)"
+                      [disabled]="slot.isBooked"
+                      [ngClass]="{
+                        '!bg-cyan-500': !slot.isBooked,
+                        '!bg-red-500': slot.isBooked,
+                        'cursor-no-drop': slot.isBooked
+                      }"
+                      *ngFor="let slot of defaultTimeSlot; let i = index"
+                      mat-flat-button
+                      class="!text-white rounded col-span-4 md:col-span-2 lg:col-span-1 mr-3 my-2"
+                    >
+                      {{ slot.startTime }} - {{ slot.endTime }}
+                    </button>
+                  </div></mat-tab
+                >
+                <mat-tab label="{{ nextDate | date : 'mediumDate' }}"
+                  ><div class="grid grid-cols-4 my-4">
+                    <button
+                      (click)="openDialog(i)"
+                      [disabled]="slot.isBooked"
+                      [ngClass]="{
+                        '!bg-cyan-500': !slot.isBooked,
+                        '!bg-red-500': slot.isBooked,
+                        'cursor-no-drop': slot.isBooked
+                      }"
+                      *ngFor="let slot of defaultTimeSlot; let i = index"
+                      mat-flat-button
+                      class="!text-white rounded col-span-1 mr-3 my-2"
+                    >
+                      {{ slot.startTime }} - {{ slot.endTime }}
+                    </button>
+                  </div></mat-tab
+                >
+              </mat-tab-group>
+
+              <div></div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-step>
+      </mat-stepper>
+    </div>
+  </div>
+</div>
